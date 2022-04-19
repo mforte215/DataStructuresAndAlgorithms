@@ -1,0 +1,23 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block content%}
+<div class="article-container">
+    {% if user.is_authenticated %}
+    <p>Welcome {{user.username}}</p>
+    {% endif %}
+<div class="article-list">
+{% if articles %}
+{% for article in articles %}
+<div class="article-card">
+<a href="{% url 'article_detail' article.slug %}">
+<img class="card-image" src="{{article.image}}" />
+<a class="article-card-link" href="{% url 'article_detail' article.slug %}">{{article.title}}</a>
+</a>
+</div>
+{% endfor %}
+{% else  %}
+<p>Sorry, no articles published yet!</p>
+{% endif %}
+</div>
+
+{% endblock %}

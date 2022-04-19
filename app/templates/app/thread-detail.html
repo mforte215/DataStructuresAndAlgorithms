@@ -1,0 +1,31 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+{% if thread %}
+<div class="header-title-section">
+    <div class="detail-section-header-one"></div>
+    <div class="detail-section-header-two"><h1 class="create-discussion-title">{{thread.title}}</h1></div>
+    <div class="detail-section-header-three"><a class="create-discussion-link" href="{% url 'create-thread' %}">Create New Discussion</a></div>
+    </div>
+<div class="thread-detail">
+<div>{{thread.text|safe}}</div>
+<div class="comment-section">
+    {% if user.is_authenticated %}
+    <p>Add Comment</p>
+    <form method="post">
+        {% csrf_token %}
+        <textarea style="resize: none;" rows="4" cols="50" name='body'></textarea><br />
+        <button type="submit">Add Comment</button><br />
+    </form>
+    {% endif %}
+    <h3>Comments</h3>
+    {% for comment in thread.comments.all %}
+    <p class="comment-detail">{{ comment.body }}
+        <br />
+        by {{ comment.user }}
+    </p>
+    {% endfor %}
+</div>
+</div>s
+{% endif %}
+{% endblock %}
